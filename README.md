@@ -27,7 +27,7 @@ Proyecto Spring Boot que expone el endpoint `GET /genesis/{capitulo}`. Si el cap
   
 5. Prueba el endpoint:
   
-   curl http://localhost:8080/genesis/1
+   curl http://localhost:8080/genesis/1 y http://localhost:8080/index.html
  
 
 ### Alternativa: ejecutar con Docker (build + run)
