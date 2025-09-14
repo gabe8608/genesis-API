@@ -28,7 +28,7 @@
         return;
       }
 
-      fetch(`http://localhost:8080/genesis/${capitulo}`)  // tu API en Java
+      fetch(`http://localhost:8081/genesis/${capitulo}`)  // tu API en Java
         .then(res => res.json())
         .then(data => {
           const div = document.getElementById("resultados");
