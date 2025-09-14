@@ -45,7 +45,7 @@ docker build -t genesis-api:latest .
 docker run -p 8080:8080 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/genesisdb --env SPRING_DATASOURCE_USERNAME=postgres --env SPRING_DATASOURCE_PASSWORD=postgres genesis-api:latest
 ```
 
-> Nota: en Linux la variable `host.docker.internal` puede no funcionar; si ejecutas todo con `docker-compose` coloca la app en la misma red que la db.
+### Nota: en Linux en caso de que se requiera la variable `host.docker.internal` puede no funcionar; si ejecutas todo con `docker-compose` coloca la app en la misma red que la db
 
 ---
 
