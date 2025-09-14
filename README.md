@@ -14,28 +14,37 @@ Proyecto Spring Boot que expone el endpoint `GET /genesis/{capitulo}`. Si el cap
 1. Asegúrate de tener: Java 17, Maven, Docker y Docker Compose instalados.
 
 2. Descomprime el ZIP y entra en la carpeta del proyecto:
+
    ```bash
    cd genesis-api
    ```
+
 3. Levanta la base de datos PostgreSQL:
+
    ```bash
    docker-compose up -d
    ```
+
 4. Compila y ejecuta la app (modo desarrollo):
+
    ```bash
    mvn spring-boot:run
    ```
+
 5. Prueba el endpoint:
+
    ```bash
    curl http://localhost:8080/genesis/1
    ```
 
 ### Alternativa: ejecutar con Docker (build + run)
+
 ```bash
 mvn -DskipTests package
 docker build -t genesis-api:latest .
 docker run -p 8080:8080 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/genesisdb --env SPRING_DATASOURCE_USERNAME=postgres --env SPRING_DATASOURCE_PASSWORD=postgres genesis-api:latest
 ```
+
 > Nota: en Linux la variable `host.docker.internal` puede no funcionar; si ejecutas todo con `docker-compose` coloca la app en la misma red que la db.
 
 ---

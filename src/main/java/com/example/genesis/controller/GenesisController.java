@@ -14,7 +14,7 @@ public class GenesisController {
     }
 
     @GetMapping("/{capitulo}")
-    public GenesisResponse getGenesis(@PathVariable("capitulo") int capitulo) {
+    public GenesisResponse getGenesis(@PathVariable int capitulo) {
         return service.getGenesisUpTo(capitulo);
     }
 }
