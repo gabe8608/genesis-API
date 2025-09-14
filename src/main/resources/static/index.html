@@ -2,119 +2,63 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Lectura de Génesis</title>
+  <title>Libro de Génesis</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-    #content {
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      max-width: 700px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    .verse {
-      margin: 8px 0;
-      padding: 6px;
-      border-bottom: 1px solid #eee;
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-    button {
-      margin: 0 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #3498db;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #2980b9;
-    }
-    button:disabled {
-      background: #bdc3c7;
-      cursor: not-allowed;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input { padding: 8px; width: 200px; }
+    button { padding: 8px 12px; margin-left: 5px; }
+    #resultados { margin-top: 20px; }
+    .capitulo { margin-bottom: 15px; }
+    .verso { margin-left: 15px; }
   </style>
 </head>
 <body>
-  <div id="content">
-    <h1 id="chapter-title">Génesis</h1>
-    <div id="verses"></div>
-    <div class="buttons">
-      <button id="prevBtn">⬅️ Anterior</button>
-      <button id="nextBtn">Siguiente ➡️</button>
-    </div>
-  </div>
+  <h1>BÚSQUEDA DE CAPÍTULOS LIBRO GÉNESIS</h1>
+
+  <input type="number" id="buscar" placeholder="Número de capítulo" />
+  <button onclick="buscar()">Buscar</button>
+
+  <div id="resultados"></div>
 
   <script>
-    let currentChapter = 1;
-    const maxChapters = 50; // Génesis tiene 50
+    function buscar() {
+      const capitulo = document.getElementById("buscar").value;
+      if (!capitulo) {
+        alert("El número de capítulo no es correcto");
+        return;
+      }
 
-    const versesDiv = document.getElementById("verses");
-    const chapterTitle = document.getElementById("chapter-title");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+      fetch(`http://localhost:8080/genesis/${capitulo}`)  // tu API en Java
+        .then(res => res.json())
+        .then(data => {
+          const div = document.getElementById("resultados");
+          div.innerHTML = "";
 
-    async function loadChapter(chapter) {
-      try {
-        const res = await fetch(`/genesis/${chapter}`);
-        const data = await res.json();
+          if (!data.Genesis || data.Genesis.length === 0) {
+            div.innerHTML = "<p>Número invalido.</p>";
+            return;
+          }
 
-        versesDiv.innerHTML = "";
-        const chapterData = data.Genesis.find(c => c.chapter === chapter);
+          data.Genesis.forEach(c => {
+            const capDiv = document.createElement("div");
+            capDiv.classList.add("capitulo");
+            capDiv.innerHTML = `<h2>Capítulo ${c.chapter}</h2>`;
 
-        chapterTitle.innerText = `Génesis ${chapter}`;
+            c.verses.forEach(v => {
+              const versoP = document.createElement("p");
+              versoP.classList.add("verso");
+              versoP.textContent = `${v.verse}. ${v.text}`;
+              capDiv.appendChild(versoP);
+            });
 
-        chapterData.verses.forEach(v => {
-          const p = document.createElement("div");
-          p.className = "verse";
-          p.innerText = `${v.verse}. ${v.text}`;
-          versesDiv.appendChild(p);
+            div.appendChild(capDiv);
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Ese capítulo no existe");
         });
-
-        // botones
-        prevBtn.disabled = chapter === 1;
-        nextBtn.disabled = chapter === maxChapters;
-
-      } catch (err) {
-        versesDiv.innerHTML = `<p style="color:red;">Error cargando capítulo</p>`;
-        console.error(err);
-      }
     }
-
-    prevBtn.addEventListener("click", () => {
-      if (currentChapter > 1) {
-        currentChapter--;
-        loadChapter(currentChapter);
-      }
-    });
-
-    nextBtn.addEventListener("click", () => {
-      if (currentChapter < maxChapters) {
-        currentChapter++;
-        loadChapter(currentChapter);
-      }
-    });
-
-    // cargar capítulo 1 al inicio
-    loadChapter(currentChapter);
   </script>
 </body>
 </html>
