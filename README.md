@@ -1,6 +1,6 @@
 # Genesis API - Proyecto para el Desafío Técnico API GENESIS
 
-Proyecto Spring Boot que expone el endpoint `GET /genesis/{capitulo}`. Si el capítulo solicitado no está en la base de datos, la app lo obtiene de la API pública y lo persiste, por lo tanto en este proyecto de prueba se exponen dos endpoints uno con la extension [(http://localhost:8080/genesis/1)] y el segundo es para detallar el aspecto de la interfaz gráfica. [(http://localhost:8080/index.html)]
+Proyecto Spring Boot que expone el endpoint `GET /genesis/{capitulo}`. Si el capítulo solicitado no está en la base de datos, la app lo obtiene de la API pública y lo persiste, por lo tanto en este proyecto de prueba se exponen dos endpoints uno con la extension [(http://localhost:8081/genesis/1)] y el segundo es para detallar el aspecto de la interfaz gráfica. [(http://localhost:8081/index.html)]
 
 ## Contenido del ZIP
 
