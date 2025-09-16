@@ -16,7 +16,7 @@
       text-align: center;
       font-size: 28px;
       margin-bottom: 30px;
-      color: #4a2c2a;
+      color: #032bcd;
       text-transform: uppercase;
     }
 
@@ -94,7 +94,7 @@
     function buscar() {
       const capitulo = document.getElementById("buscar").value;
       if (!capitulo) {
-        alert("Por favor ingresa un número de capítulo.");
+        alert("EL CAPÍTULO NO EXISTE");
         return;
       }
 
@@ -126,7 +126,7 @@
         })
         .catch(err => {
           console.error(err);
-          alert("Error al consultar el capítulo");
+          alert("EL CAPÍTULO NO EXISTE");
         });
     }
   </script>
